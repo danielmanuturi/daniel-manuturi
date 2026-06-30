@@ -1,0 +1,34 @@
+# Variabel harga 1 kg daging ayam
+harga_per_kg = 40000
+
+# Input jumlah kilogram yang ingin dibeli
+jumlah_kg = float(input("Masukkan jumlah kilogram daging ayam:"))
+
+# Tanya apakah ingin menambah
+while True:
+    tambahan = input("Masukkan tambahan kilogram atau ketik 'cukup' untuk selesai: ")
+    if tambahan.lower() == "cukup":
+        break
+
+    # Tambahkan ke jumlah_kg
+    jumlah_kg += float(tambahan)
+
+total_harga = jumlah_kg * harga_per_kg
+
+# Menentukan diskon
+if jumlah_kg > 5:
+    diskon = 7000
+elif jumlah_kg >= 2:
+    diskon = 5000
+else:
+    diskon = 0
+
+# Harga setelah diskon
+total_bayar = total_harga - diskon
+
+# Menampilkan hasil
+print(f"Harga per kg : Rp{harga_per_kg:,}")
+print(f"Jumlah beli  : {jumlah_kg} kg")
+print(f"Total harga  : Rp{total_harga:}")
+print(f"Diskon       : Rp{diskon:,.0f}")
+print(f"Total bayar  : Rp{total_bayar:,.0f}")

@@ -1,0 +1,82 @@
+# 1. Pricelist (Dictionary)
+harga_daging_per_kg = {
+    "ayam": 15000,
+    "sapi": 12000,
+    "babi": 10000
+}
+
+# Total keseluruhan
+total_kotor = 0
+total_diskon = 0
+
+while True:
+    pembuka = ("Halo! Selamat datang di Toko Daging Sejahtera\n"
+    "Berikut daftar harga daging per kilogram:\n"
+    "1. Ayam : Rp15.000\n"
+    "2. Sapi : Rp12.000\n"
+    "3. Babi : Rp10.000\n")
+    print(pembuka)
+
+    ask = input("\nApakah Anda ingin membeli daging? (ya/tidak): ").lower()
+        
+    if ask != "ya":
+        print("\nTerima kasih telah berkunjung!")
+        
+    else:
+        while True:
+
+            # Input jenis daging dan jumlah kilogram
+            jenis = input("\nPilih daging (ayam/sapi/babi): ").lower()
+
+
+            if jenis not in harga_daging_per_kg:
+                print("❌ Jenis daging tidak tersedia!")
+                continue
+
+            try:
+                kg = float(input("Masukkan jumlah kilogram: "))
+            except ValueError:
+                print("❌ Harus angka!")
+                continue
+
+            # hitung subtotal
+            harga = harga_daging_per_kg[jenis]
+            subtotal = harga * kg
+
+            # diskon per jenis (nested if)
+            diskon = 0
+
+            if jenis == "ayam":
+                if kg >= 5:
+                    diskon = subtotal * 0.10
+
+            elif jenis == "sapi":
+                if kg >= 2:
+                    diskon = subtotal * 0.15
+
+            elif jenis == "babi":
+                if kg >= 3:
+                    diskon = subtotal * 0.12
+
+            # akumulasi total
+            total_kotor += subtotal
+            total_diskon += diskon
+
+            print(f"Subtotal {jenis}: Rp{subtotal:,.0f}")
+            print(f"Diskon        : Rp{diskon:,.0f}")
+
+            # tanya lanjutan
+            lanjut = input("\nMau tambah belanja lagi? (ya/cukup): ").lower()
+
+            if lanjut == "cukup":
+                break
+
+    # total bersih
+    total_bersih = total_kotor - total_diskon
+
+    # output akhir
+    print("\n===== NOTA PEMBELIAN =====")
+    print(f"Total Kotor  : Rp{total_kotor:,.0f}")
+    print(f"Total Diskon : Rp{total_diskon:,.0f}")
+    print(f"Total Bayar  : Rp{total_bersih:,.0f}")
+    print("Terima kasih telah berbelanja di Toko Daging Sejahtera!")

@@ -1,0 +1,16 @@
+{
+  "makanan": [
+    { "1": "Nasi Goreng Spesial", "harga": 25000 },
+    { "2": "Mie Ayam Kuah", "harga": 20000 },
+    { "3": "Soto Ayam", "harga": 18000 },
+    { "4": "Gado-Gado", "harga": 22000 },
+    { "5": "Lumpia Goreng", "harga": 15000 }
+  ],
+  "minuman": [
+    { "6": "Es Teh Manis", "harga": 8000 },
+    { "7": "Jus Jeruk Segar", "harga": 12000 },
+    { "8": "Kopi Hitam", "harga": 10000 },
+    { "9": "Smoothie Mangga", "harga": 15000 },
+    { "10": "Air Mineral Botol", "harga": 5000 }
+  ]
+}

@@ -1,0 +1,104 @@
+"""
+SISTEM KASIR PINTAR - TOKO DAGING
+Program kasir dengan fitur diskon bersarang, penggabungan item, dan catatan pembelian sementara
+"""
+
+def format_rupiah(angka):
+    return f"Rp{angka:,.0f}"
+
+def hitung_diskon(jenis, jumlah, harga):
+    subtotal = jumlah * harga
+    diskon = 0
+    if jenis == "Ayam" and jumlah >= 5:
+        diskon = 0.10 * subtotal
+    elif jenis == "Sapi" and jumlah >= 2:
+        diskon = 0.15 * subtotal
+    elif jenis == "Babi" and jumlah >= 3:
+        diskon = 0.12 * subtotal
+    return subtotal, diskon
+
+def tampilkan_ringkasan_sementara(belanja, harga_daging):
+    print("\n📋 Catatan Pembelian Sementara:")
+    for jenis, jumlah in belanja.items():
+        subtotal, diskon = hitung_diskon(jenis, jumlah, harga_daging[jenis])
+        total = subtotal - diskon
+        print(f"Daging {jenis:<5} {jumlah} kg | Subtotal: {format_rupiah(subtotal)} | Diskon: {format_rupiah(diskon)} | Total: {format_rupiah(total)}")
+    print()
+
+def main():
+    harga_daging = {"Ayam": 15000, "Sapi": 12000, "Babi": 10000}
+    belanja = {}
+
+    print("="*55)
+    print(" SELAMAT DATANG DI SISTEM KASIR PINTAR TOKO DAGING ")
+    print("="*55)
+    for j,h in harga_daging.items():
+        print(f"- {j:<5}: {format_rupiah(h)}/kg")
+    print("Ketik 'cukup' jika selesai.\n")
+
+    while True:
+        jenis = input("Jenis daging: ").capitalize()
+        if jenis.lower() == "cukup":
+            break
+        if jenis not in harga_daging:
+            print("❌ Jenis daging tidak tersedia!\n")
+            continue
+        try:
+            jumlah = float(input("Jumlah (kg): "))
+            if jumlah <= 0:
+                print("❌ Jumlah harus > 0!\n")
+                continue
+        except ValueError:
+            print("❌ Input harus angka!\n")
+            continue
+
+        belanja[jenis] = belanja.get(jenis, 0) + jumlah
+        print(f"✅ Ditambahkan {jumlah} kg {jenis} (Total: {belanja[jenis]} kg)\n")
+        tampilkan_ringkasan_sementara(belanja, harga_daging)
+
+    if not belanja:
+        print("⚠️ Tidak ada pembelian.")
+        return
+
+    total_kotor, total_diskon = 0, 0
+    print("\n=== NOTA PEMBAYARAN ===")
+    for jenis, jumlah in belanja.items():
+        subtotal, diskon = hitung_diskon(jenis, jumlah, harga_daging[jenis])
+        total_kotor += subtotal
+        total_diskon += diskon
+        total_bayar = subtotal - diskon
+        print(
+    f"Daging   : {jenis}\n"
+    f"Jumlah   : {jumlah} kg\n"
+    f"Subtotal : {format_rupiah(subtotal)}\n"
+    f"Diskon   : {format_rupiah(diskon)}\n"
+    f"Total    : {format_rupiah(total_bayar)}\n"
+)
+
+
+    total_bersih = total_kotor - total_diskon
+    print("\n--- Ringkasan ---")
+    print(f"Total Kotor   : {format_rupiah(total_kotor)}")
+    print(f"Total Diskon  : {format_rupiah(total_diskon)}")
+    print(f"Total Bersih  : {format_rupiah(total_bersih)}")
+
+    while True:
+        try:
+            bayar = float(input("\nUang pembayaran (Rp): "))
+            if bayar < total_bersih:
+                print(f"❌ Uang kurang {format_rupiah(total_bersih - bayar)}")
+                continue
+            break
+        except ValueError:
+            print("❌ Input harus angka!")
+
+    print("\n=== STRUK PEMBAYARAN ===")
+    print(f"Total Belanja : {format_rupiah(total_bersih)}")
+    print(f"Uang Dibayar  : {format_rupiah(bayar)}")
+    print(f"Kembalian     : {format_rupiah(bayar - total_bersih)}")
+    print("="*55)
+    print(" TERIMA KASIH TELAH BERBELANJA DI TOKO KAMI! ")
+    print("="*55)
+
+if __name__ == "__main__":
+    main()
