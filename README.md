@@ -1,3 +1,1 @@
 # latihan_pythondasar
-
-
